@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.gome.fenghe.wifip2p.WiFiDirectActivity;
+import com.gome.fenghe.wifip2p2.WifiP2pActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private Button mWifiBtn;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.wifi_p2p_btn:
-                    startActivity(new Intent(MainActivity.this, WiFiDirectActivity.class));
+                    startActivity(new Intent(MainActivity.this, WifiP2pActivity.class));
                     break;
             }
         }

@@ -11,6 +11,13 @@
         android:text="Start search"/>
 
     <Button
+        android:id="@+id/connect_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start connect"/>
+
+
+    <Button
         android:id="@+id/send_file_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

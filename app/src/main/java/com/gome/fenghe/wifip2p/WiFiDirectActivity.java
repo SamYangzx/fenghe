@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
@@ -39,6 +40,7 @@ import android.widget.Toast;
 
 import com.gome.fenghe.wifip2p.DeviceListFragment.DeviceActionListener;
 import com.gome.fenghe.R;
+import com.gome.fenghe.wifip2p2.WifiP2pHelper;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available
@@ -59,9 +61,11 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
     private BroadcastReceiver receiver = null;
 
     private Button mStartSearchBtn;
+    private Button mConnectBtn;
     private Button mSendBtn;
 
     private DeviceDetailFragment mDetailFragment;
+
 
     private DeviceDetailFragment getDetailFragment() {
         if (mDetailFragment == null) {
@@ -69,6 +73,16 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
                     .findFragmentById(R.id.frag_detail);
         }
         return mDetailFragment;
+    }
+
+    private DeviceListFragment mDeviceListFragment;
+
+    private DeviceListFragment getDeviceListFragment() {
+        if (mDeviceListFragment == null) {
+            mDeviceListFragment = (DeviceListFragment) getFragmentManager()
+                    .findFragmentById(R.id.frag_list);
+        }
+        return mDeviceListFragment;
     }
 
     /**
@@ -81,7 +95,7 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_wifi_direct);
 
         // add necessary intent values to be matched.
 
@@ -126,11 +140,22 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
             }
         });
 
+        mConnectBtn = (Button) findViewById(R.id.connect_btn);
+        mConnectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WifiP2pConfig config = new WifiP2pConfig();
+                config.deviceAddress = "02:08:22:fc:ca:e1";
+                config.wps.setup = WpsInfo.PBC;
+                ((DeviceActionListener)getDeviceListFragment()).connect(config);
+            }
+        });
+
         mSendBtn = (Button) findViewById(R.id.send_file_btn);
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  getDetailFragment().sendData
+                  getDetailFragment().sendData("");
             }
         });
     }
@@ -239,6 +264,8 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
             @Override
             public void onSuccess() {
                 // WiFiDirectBroadcastReceiver will notify us. Ignore for now.
+                Toast.makeText(WiFiDirectActivity.this, "Connect success!",
+                        Toast.LENGTH_SHORT).show();
             }
 
             @Override

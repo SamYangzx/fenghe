@@ -14,4 +14,11 @@
     <string name="group_owner_text">"Am I the Group Owner? "</string>
     <string name="label_me">ME</string>
     <string name="label_peers">PEERS</string>
+
+    <string name="type_application">app</string>
+    <string name="type_music">music</string>
+    <string name="type_movie">movie</string>
+    <string name="type_photo">picture</string>
+    <string name="type_other">others</string>
+    <string name="title_activity_base">BaseActivity</string>
 </resources>

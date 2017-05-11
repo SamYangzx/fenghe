@@ -134,8 +134,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 //		if(!TextUtils.isEmpty(device)){
 //			Log.d("sam", "device: " + device.deviceAddress);
 //		}
-		//String client_mac_fixed = new String(device.deviceAddress).replace("99", "19");
-		String client_mac_fixed = new String("02:08:22:80:29:f5").replace("99", "19");
+		String client_mac_fixed = new String(device.deviceAddress).replace("99", "19");
+		//String client_mac_fixed = new String("02:08:22:80:29:f5").replace("99", "19");
 
 		String clientIP = Utils.getIPFromMac(client_mac_fixed);
 
@@ -148,7 +148,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 		serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
 		serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, uri.toString());
 
-		if(localIP.equals(IP_SERVER)){
+		if(!TextUtils.isEmpty(localIP)&&localIP.equals(IP_SERVER)){
 			serviceIntent.putExtra(FileTransferService.EXTRAS_ADDRESS, clientIP);
 		}else{
 			serviceIntent.putExtra(FileTransferService.EXTRAS_ADDRESS, IP_SERVER);
@@ -168,11 +168,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 		String localIP = Utils.getLocalIPAddress();
 		// Trick to find the ip in the file /proc/net/arp
 		Log.d("sam", "device: " + device);
-//		if(!TextUtils.isEmpty(device)){
-//			Log.d("sam", "device: " + device.deviceAddress);
-//		}
-		//String client_mac_fixed = new String(device.deviceAddress).replace("99", "19");
-		String client_mac_fixed = new String("02:08:22:80:29:f5").replace("99", "19");
+		String client_mac_fixed = new String(device.deviceAddress).replace("99", "19");
+//		String client_mac_fixed = new String("02:08:22:80:29:f5").replace("99", "19");
 
 		String clientIP = Utils.getIPFromMac(client_mac_fixed);
 
@@ -232,11 +229,13 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 	public void showDetails(WifiP2pDevice device) {
 		this.device = device;
 		mDeviceAddress = device.deviceAddress;
-		this.getView().setVisibility(View.VISIBLE);
-		TextView view = (TextView) mContentView.findViewById(R.id.device_address);
-		view.setText(device.deviceAddress);
-		view = (TextView) mContentView.findViewById(R.id.device_info);
-		view.setText(device.toString());
+
+
+//		this.getView().setVisibility(View.VISIBLE);
+//		TextView view = (TextView) mContentView.findViewById(R.id.device_address);
+//		view.setText(device.deviceAddress);
+//		view = (TextView) mContentView.findViewById(R.id.device_info);
+//		view.setText(device.toString());
 
 	}
 

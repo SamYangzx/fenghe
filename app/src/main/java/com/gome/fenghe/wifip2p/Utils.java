@@ -75,9 +75,9 @@ public class Utils {
 				}
 			}
 		} catch (SocketException ex) {
-			Log.e("AndroidNetworkAddressFactory", "getLocalIPAddress()", ex);
+			Log.e("Utils", "getLocalIPAddress()", ex);
 		} catch (NullPointerException ex) {
-			Log.e("AndroidNetworkAddressFactory", "getLocalIPAddress()", ex);
+			Log.e("Utils", "getLocalIPAddress()", ex);
 		}
 		return null;
 	}
