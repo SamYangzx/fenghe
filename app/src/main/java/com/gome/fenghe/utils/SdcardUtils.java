@@ -10,11 +10,18 @@ import android.os.storage.StorageManager;
  * @author Administrator
  */
 public class SdcardUtils {
-    private static String RECEIVE_DIR = "p2pReceiver";
+    private static String RECEIVE_DIR = "wifip2p";
+    private static String SEND_DIR = RECEIVE_DIR + File.separator + "send";
+    private static String RECEIVER_DIR = RECEIVE_DIR + File.separator + "receiver";
+
+    public static File getSendFileDirPath(Context context) {
+        return new File(SdcardUtils.getUseableSdcardFile(context, false),
+                SEND_DIR);
+    }
 
     public static File getReceivedFileDirPath(Context context) {
         return new File(SdcardUtils.getUseableSdcardFile(context, false),
-                RECEIVE_DIR);
+                RECEIVER_DIR);
     }
 
     /**

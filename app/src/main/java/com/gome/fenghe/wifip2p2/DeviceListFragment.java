@@ -97,7 +97,7 @@ public class DeviceListFragment extends ListFragment {
         WifiP2pDevice device = (WifiP2pDevice) getListAdapter().getItem(position);
 //        ((DeviceActionListener) getActivity()).showDetails(device);
         progressDialog.dismiss();
-        ((WifiP2pActivity)getActivity()).getWifiP2pHelper().connectDevice(device, new WifiP2pManager.ActionListener() {
+        ((WifiP2pActivity) getActivity()).getWifiP2pHelper().connectDevice(device, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
 
@@ -169,19 +169,21 @@ public class DeviceListFragment extends ListFragment {
 
     public void updateDevicesList(ArrayList<WifiP2pDevice> peerList) {
 //        peers = peerList;
-    //    peers = (ArrayList<WifiP2pDevice>) peerList.clone();
+        //    peers = (ArrayList<WifiP2pDevice>) peerList.clone();
         peers.clear();
         addDevices(peerList, peers);
-        LogUtils.d(TAG,"peers.size: " + peers.size());
+        LogUtils.d(TAG, "peers.size: " + peers.size());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
-        progressDialog.dismiss();
+        if (peerList.size() != 0) {
+            progressDialog.dismiss();
+        }
     }
 
-    public void addDevices(ArrayList<WifiP2pDevice> src, ArrayList<WifiP2pDevice> target){
-        if(src == null || target == null){
+    public void addDevices(ArrayList<WifiP2pDevice> src, ArrayList<WifiP2pDevice> target) {
+        if (src == null || target == null) {
             return;
         }
-        for(WifiP2pDevice device : src){
+        for (WifiP2pDevice device : src) {
             target.add(device);
         }
     }

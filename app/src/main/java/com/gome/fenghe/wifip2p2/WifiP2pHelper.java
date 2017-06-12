@@ -41,6 +41,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 
 
@@ -150,8 +151,12 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                 || (fileSendAsyncTask != null && fileSendAsyncTask.isTranfering));
     }
 
+    public void sendFile(final File file){
+
+    }
+
     // 发送文件
-    public void sendFiles(final ArrayList<File> fl) {
+    public void sendFiles(final List<File> fl) {
         if (sendingFileList.size() == 0) { //没有文件正在发送-->启动后台发送任务
             sendingFileList.addAll(fl);
             fileSendAsyncTask = new FileSendAsyncTask();
@@ -457,7 +462,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
         deviceList.addAll(peerList.getDeviceList());
         for (int i = 0; i < deviceList.size(); i++) {
             WifiP2pDevice dd = deviceList.get(i);
-            LogUtils.i(WifiP2pHelper.TAG, dd + "---->addr= "+dd.deviceAddress);
+            LogUtils.i(WifiP2pHelper.TAG, dd + "---->addr= " + dd.deviceAddress);
         }
         mHandler.sendEmptyMessage(WIFIP2P_DEVICE_LIST_CHANGED);
     }
