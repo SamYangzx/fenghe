@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import com.gome.fenghe.BaseActivity;
 import com.gome.fenghe.R;
-import com.gome.fenghe.utils.LogUtils;
+import com.gome.fenghe.utils.LogTool;
 import com.gome.fenghe.utils.SdcardUtils;
 import com.gome.fenghe.utils.ToastUtils;
 import com.google.android.gms.appindexing.Action;
@@ -24,8 +24,6 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.gome.fenghe.wifip2p2.WifiP2pHelper.WIFIP2P_CONNECT_P2P_FAIL;
@@ -73,7 +71,7 @@ public class WifiP2pActivity extends BaseActivity {
                     ToastUtils.toast(mContext, "connect success");
                     break;
                 default:
-                    LogUtils.d(TAG, "unknown msg: " + what);
+                    LogTool.d(TAG, "unknown msg: " + what);
                     break;
             }
         }
@@ -139,7 +137,7 @@ public class WifiP2pActivity extends BaseActivity {
                 File[] files = SdcardUtils.getSendFileDirPath(mContext).listFiles();
                 if (files != null) {
                     for (File file : files) {
-                        LogUtils.d(TAG, "file: " + file);
+                        LogTool.d(TAG, "file: " + file);
                     }
                     mWifiP2pHelper.sendFiles((Arrays.asList(files)));
                 }
