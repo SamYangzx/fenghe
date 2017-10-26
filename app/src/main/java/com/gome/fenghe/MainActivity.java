@@ -2,10 +2,12 @@ package com.gome.fenghe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.gome.fenghe.utils.AudioRecordUtils;
 import com.gome.fenghe.utils.LogTool;
 import com.gome.fenghe.wifip2p2.WifiP2pActivity;
 
@@ -14,6 +16,7 @@ public class MainActivity extends BaseActivity {
 
     private Context mContext;
     private Button mWifiBtn;
+    AudioManager mAudioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +77,18 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         mWifiBtn = (Button) findViewById(R.id.wifi_p2p_btn);
         mWifiBtn.setOnClickListener(mListener);
         Button mActivityTestBtn = (Button) findViewById(R.id.activity_test_btn);
         mActivityTestBtn.setOnClickListener(mListener);
     }
 
+    @Override
+    public void initData() {
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    }
 
     private View.OnClickListener mListener = new View.OnClickListener() {
         @Override
@@ -90,7 +98,8 @@ public class MainActivity extends BaseActivity {
                     startActivity(new Intent(MainActivity.this, WifiP2pActivity.class));
                     break;
                 case R.id.activity_test_btn:
-                    startActivity(new Intent(mContext, AnotherActivity.class));
+//                    startActivity(new Intent(mContext, CopyTestActivity.class));
+                    test();
                     break;
                 default:
                     break;
@@ -98,5 +107,22 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    private void test() {
+        AudioRecordUtils record = new AudioRecordUtils();
+        record.setListener(new AudioRecordUtils.IVolumeListener() {
+            @Override
+            public void volumeChanged(int volume) {
+                setCallVolume(volume);
+            }
+        });
+        record.getNoiseLevel();
+    }
+
+    private void setCallVolume(int volume) {
+        LogTool.d(TAG, "setCallVolume: " + volume);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, volume, AudioManager.FLAG_PLAY_SOUND);
+        LogTool.d(TAG, "getCallVolume: " + mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL));
+
+    }
 
 }

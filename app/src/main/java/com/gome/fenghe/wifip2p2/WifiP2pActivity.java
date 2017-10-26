@@ -82,7 +82,7 @@ public class WifiP2pActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_p2p2);
         mContext = this;
-        initView();
+//        initView();
         mWifiP2pHelper = new WifiP2pHelper(this, mHandler);
         registerReceiver();
         initForWifiDirect();
@@ -90,7 +90,7 @@ public class WifiP2pActivity extends BaseActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-        initData();
+//        initData();
     }
 
 
@@ -99,6 +99,7 @@ public class WifiP2pActivity extends BaseActivity {
         unregisterReceiver(mWifiP2pHelper);
         super.onDestroy();
     }
+
 
     private void registerReceiver() {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -109,7 +110,8 @@ public class WifiP2pActivity extends BaseActivity {
         registerReceiver(mWifiP2pHelper, mIntentFilter);
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         mDeviceListFrag = (DeviceListFragment) getFragmentManager()
                 .findFragmentById(R.id.frag_list_p2p);
 
@@ -149,7 +151,8 @@ public class WifiP2pActivity extends BaseActivity {
         mWifiP2pHelper.discoverDevice();
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         if (!SdcardUtils.getReceivedFileDirPath(mContext).exists()) {
             SdcardUtils.getReceivedFileDirPath(mContext).mkdirs();
         }
@@ -158,6 +161,7 @@ public class WifiP2pActivity extends BaseActivity {
             SdcardUtils.getSendFileDirPath(mContext).mkdirs();
         }
     }
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

@@ -64,4 +64,13 @@ public class AnotherActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+   public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
 }

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fenghe.iml" filepath="$PROJECT_DIR$/Fenghe.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yuyin/yuyin.iml" filepath="$PROJECT_DIR$/yuyin/yuyin.iml" />
     </modules>
   </component>
 </project>
