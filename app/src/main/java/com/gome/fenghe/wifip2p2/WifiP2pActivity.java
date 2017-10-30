@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import com.gome.fenghe.BaseActivity;
 import com.gome.fenghe.R;
-import com.gome.fenghe.utils.LogTool;
+import com.gome.fenghe.utils.LogUtils;
 import com.gome.fenghe.utils.SdcardUtils;
 import com.gome.fenghe.utils.ToastUtils;
 import com.google.android.gms.appindexing.Action;
@@ -71,7 +71,7 @@ public class WifiP2pActivity extends BaseActivity {
                     ToastUtils.toast(mContext, "connect success");
                     break;
                 default:
-                    LogTool.d(TAG, "unknown msg: " + what);
+                    LogUtils.d(TAG, "unknown msg: " + what);
                     break;
             }
         }
@@ -139,7 +139,7 @@ public class WifiP2pActivity extends BaseActivity {
                 File[] files = SdcardUtils.getSendFileDirPath(mContext).listFiles();
                 if (files != null) {
                     for (File file : files) {
-                        LogTool.d(TAG, "file: " + file);
+                        LogUtils.d(TAG, "file: " + file);
                     }
                     mWifiP2pHelper.sendFiles((Arrays.asList(files)));
                 }

@@ -1,7 +1,5 @@
 package com.gome.fenghe.utils;
 
-import android.util.TimeUtils;
-
 import java.io.*;
 import java.nio.channels.*;
 
@@ -14,8 +12,8 @@ public class CopyFileUtils {
 
     public static void copyFileUsingFileStreams(File source, File dest) throws IOException {
         long startTime = System.currentTimeMillis();
-//        LogTool.d(TAG, "startTime: " );
-        LogTool.d(TAG, "copyFileUsingFileStreams.source: " + source);
+//        LogUtils.d(TAG, "startTime: " );
+        LogUtils.d(TAG, "copyFileUsingFileStreams.source: " + source);
         InputStream input = null;
         OutputStream output = null;
         try {
@@ -35,13 +33,13 @@ public class CopyFileUtils {
             }
         }
         long endTime = System.currentTimeMillis();
-        LogTool.i(TAG, "sopy source: " + source.getAbsolutePath() + " take time: " + (endTime - startTime));
+        LogUtils.i(TAG, "sopy source: " + source.getAbsolutePath() + " take time: " + (endTime - startTime));
     }
 
 
     public static void copyFileUsingFileChannels(File source, File dest) throws IOException {
         long startTime = System.currentTimeMillis();
-        LogTool.d(TAG, "copyFileUsingFileChannels.source: " + source);
+        LogUtils.d(TAG, "copyFileUsingFileChannels.source: " + source);
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
         try {
@@ -53,6 +51,6 @@ public class CopyFileUtils {
             outputChannel.close();
         }
         long endTime = System.currentTimeMillis();
-        LogTool.i(TAG, "sopy source: " + source.getAbsolutePath() + " take time: " + (endTime - startTime));
+        LogUtils.i(TAG, "sopy source: " + source.getAbsolutePath() + " take time: " + (endTime - startTime));
     }
 }

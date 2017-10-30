@@ -2,14 +2,14 @@ package com.gome.fenghe;
 
 import android.os.Bundle;
 
-import com.gome.fenghe.utils.LogTool;
+import com.gome.fenghe.utils.LogUtils;
 
 public class AnotherActivity extends BaseActivity {
     private static final String TAG = AnotherActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LogTool.d(TAG, "onCreate");
+        LogUtils.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_another);
     }
@@ -17,32 +17,32 @@ public class AnotherActivity extends BaseActivity {
 
     @Override
     protected void onStart() {
-        LogTool.v(TAG, "onStart");
+        LogUtils.v(TAG, "onStart");
 
-//        LogTool.callStack(TAG);
+//        LogUtils.callStack(TAG);
         super.onStart();
     }
 
 
     @Override
     protected void onResume() {
-        LogTool.v(TAG, "onResume");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onResume");
+//        LogUtils.callStack(TAG);
         super.onResume();
     }
 
 
     @Override
     protected void onRestart() {
-        LogTool.v(TAG, "onRestart");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onRestart");
+//        LogUtils.callStack(TAG);
         super.onRestart();
     }
 
     @Override
     protected void onPause() {
-        LogTool.v(TAG, "onPause");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onPause");
+//        LogUtils.callStack(TAG);
 
         super.onPause();
     }
@@ -50,16 +50,16 @@ public class AnotherActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-        LogTool.v(TAG, "onStop");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onStop");
+//        LogUtils.callStack(TAG);
 
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        LogTool.v(TAG, "onDestroy");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onDestroy");
+//        LogUtils.callStack(TAG);
 
         super.onDestroy();
     }

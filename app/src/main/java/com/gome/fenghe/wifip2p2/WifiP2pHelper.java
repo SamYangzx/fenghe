@@ -23,7 +23,7 @@ import com.gome.fenghe.utils.ApkUtils;
 import com.gome.fenghe.utils.AudioUtils;
 import com.gome.fenghe.utils.DataTypeUtils;
 import com.gome.fenghe.utils.FileTypeUtils;
-import com.gome.fenghe.utils.LogTool;
+import com.gome.fenghe.utils.LogUtils;
 import com.gome.fenghe.utils.SdcardUtils;
 
 import java.io.File;
@@ -111,31 +111,31 @@ public class WifiP2pHelper extends BroadcastReceiver implements
 
     // 开始查找设备
     public void discoverDevice() {
-        LogTool.d(TAG, "WifiP2pHelper-->discoverDevice()");
+        LogUtils.d(TAG, "WifiP2pHelper-->discoverDevice()");
         if (!isWifiOn()) {
             toggleWifi(true);
         }
         if (isConnected) {
-            LogTool.d(TAG, "WifiP2pHelper-->discoverDevice ended-->isConnected=true");
+            LogUtils.d(TAG, "WifiP2pHelper-->discoverDevice ended-->isConnected=true");
             return;
         }
         mHandler.sendEmptyMessage(WIFIP2P_DEVICE_DISCOVERING);
         manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                LogTool.d(TAG, "WifiP2pHelper-->discoverDevice success!!");
+                LogUtils.d(TAG, "WifiP2pHelper-->discoverDevice success!!");
             }
 
             @Override
             public void onFailure(int reasonCode) {
-                LogTool.d(TAG, "WifiP2pHelper-->discoverDevice failed   reasonCode=" + reasonCode);
+                LogUtils.d(TAG, "WifiP2pHelper-->discoverDevice failed   reasonCode=" + reasonCode);
             }
         });
     }
 
     // 连接到设备
     public void connectDevice(WifiP2pDevice device, ActionListener listener) {
-        LogTool.d(TAG, "WifiP2pHelper-->connectDevice()");
+        LogUtils.d(TAG, "WifiP2pHelper-->connectDevice()");
         WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = device.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
@@ -188,7 +188,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                     out = socket.getOutputStream();
 
                 } catch (IOException e) {
-                    LogTool.i(TAG, "sendFiles error-->socket.connect error!!!");
+                    LogUtils.i(TAG, "sendFiles error-->socket.connect error!!!");
                     e.printStackTrace();
                     try {
                         if (out != null) {
@@ -226,7 +226,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                             out.write(buf, 0, len);
                             mSendCount += len;
                         }
-                        LogTool.d(WifiP2pHelper.TAG, "send a file sucessfully!!!");
+                        LogUtils.d(WifiP2pHelper.TAG, "send a file sucessfully!!!");
                     } catch (Exception e) {
                         e.printStackTrace();
                         isSuccessed = false;
@@ -285,7 +285,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                 inputstream = socket.getInputStream();
                 File sdcard = SdcardUtils.getUseableSdcardFile(activity, false);
                 if (sdcard == null || !sdcard.canWrite()) {
-                    LogTool.d(TAG, "没有sdcard可写");
+                    LogUtils.d(TAG, "没有sdcard可写");
                     return false;
                 }
                 //next a few step will recevive a file
@@ -294,7 +294,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                 byte buffer_nameLen[] = new byte[4];
                 int receveCount = inputstream.read(buffer_nameLen);
                 if (receveCount == -1) {//the other side closed
-                    LogTool.d(TAG, "get file name len error");
+                    LogUtils.d(TAG, "get file name len error");
                     throw new IOException();
                 }
                 int fileNameLen = DataTypeUtils.byteToInt2(buffer_nameLen);
@@ -302,19 +302,19 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                 byte buffer[] = new byte[fileNameLen];
                 receveCount = inputstream.read(buffer);
                 if (receveCount == -1) {//the other side closed
-                    LogTool.d(TAG, "get file name error");
+                    LogUtils.d(TAG, "get file name error");
                     throw new IOException();
                 }
                 String info = new String(buffer, 0, receveCount);
-                LogTool.d(TAG, "recevice File info->" + info);
+                LogUtils.d(TAG, "recevice File info->" + info);
                 if (info == null || "".equals(info)) {//recevice file name failed, so break now!
-                    LogTool.i(TAG, "recevice file info---> info exception");
+                    LogUtils.i(TAG, "recevice file info---> info exception");
                     throw new IOException();
                 }
                 String infos[] = info.split("&");
                 String name = infos[0]; //文件名
                 size = Long.valueOf(infos[1]);
-                LogTool.d(TAG, "recevice fileinfo: name=" + name + " size=" + size);
+                LogUtils.d(TAG, "recevice fileinfo: name=" + name + " size=" + size);
 
                 //防止文件名冲突
                 int i = 1;
@@ -371,7 +371,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                         break;
                     }
                 }
-                LogTool.d(WifiP2pHelper.TAG, "recevice a file sucessfully!!!" + name);
+                LogUtils.d(WifiP2pHelper.TAG, "recevice a file sucessfully!!!" + name);
                 AudioUtils.addNewFileToDB(activity, f.getPath());//将新接收的文件加入数据库中
 
             } catch (IOException e) {
@@ -390,7 +390,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                 } catch (Exception e) {
                 }
                 mReceviceCount = 0;
-                LogTool.i(WifiP2pHelper.TAG, "接收完一个文件----->isSuccessed=" + isSuccessed);
+                LogUtils.i(WifiP2pHelper.TAG, "接收完一个文件----->isSuccessed=" + isSuccessed);
                 if (isSuccessed) {
                     mHandler.obtainMessage(WIFIP2P_RECEIVE_ONE_FILE_SUCCESSFULLY, f).sendToTarget();
                 } else {
@@ -416,7 +416,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
         double ret = 0;
         if (mSendCount >= mLastSendCount) {
             ret = (mSendCount - mLastSendCount) / (ms / 1000.0f);
-            LogTool.i(TAG, "send speed = " + ret);
+            LogUtils.i(TAG, "send speed = " + ret);
             ret = ret / 1024 / 1024.0f;
             ret = Double.valueOf(DataTypeUtils.format(ret));
         }
@@ -428,7 +428,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
         double ret = 0;
         if (mReceviceCount >= mLastRceviceCount) {
             ret = (mReceviceCount - mLastRceviceCount) / (ms / 1000.0f);
-            LogTool.i(TAG, "recevied speed = " + ret);
+            LogUtils.i(TAG, "recevied speed = " + ret);
             ret = ret / 1024 / 1024.0f;
             ret = Double.valueOf(DataTypeUtils.format(ret));
         }
@@ -459,7 +459,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
         deviceList.addAll(peerList.getDeviceList());
         for (int i = 0; i < deviceList.size(); i++) {
             WifiP2pDevice dd = deviceList.get(i);
-            LogTool.i(WifiP2pHelper.TAG, dd + "---->addr= " + dd.deviceAddress);
+            LogUtils.i(WifiP2pHelper.TAG, dd + "---->addr= " + dd.deviceAddress);
         }
         mHandler.sendEmptyMessage(WIFIP2P_DEVICE_LIST_CHANGED);
     }
@@ -468,7 +468,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo info) {
         // TODO Auto-generated method stub
-        LogTool.d(TAG, "onConnectionInfoAvailable()");
+        LogUtils.d(TAG, "onConnectionInfoAvailable()");
         connectInfo = info;
         clientAddress = null;
         new Thread() {
@@ -481,12 +481,12 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                         if (isServer()) {//recevive the client address
                             try {
                                 Socket firstClientSocket = serverSocket.accept();
-                                LogTool.d(TAG, "serverSocket.accept() max=");
+                                LogUtils.d(TAG, "serverSocket.accept() max=");
                                 InputStream inputStream = firstClientSocket.getInputStream();
                                 OutputStream outputStream = firstClientSocket.getOutputStream();
                                 clientAddress = firstClientSocket.getInetAddress(); //get the client addr
-                                LogTool.i(TAG, "clientAddress=" + clientAddress);
-                                LogTool.i(TAG, "serverAddress=" + connectInfo.groupOwnerAddress);
+                                LogUtils.i(TAG, "clientAddress=" + clientAddress);
+                                LogUtils.i(TAG, "serverAddress=" + connectInfo.groupOwnerAddress);
 
                                 //1.发送MAC地址给客户端
                                 if (currentMAC != null) {
@@ -506,7 +506,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                                 if (clientMac != null && !clientMac.equals("")) {
                                     currentConnectMAC = clientMac;
                                 }
-                                LogTool.d(TAG, "server has receviced clientMAC:" + currentConnectMAC);
+                                LogUtils.d(TAG, "server has receviced clientMAC:" + currentConnectMAC);
                                 outputStream.close();
                                 firstClientSocket.close();
                             } catch (Exception e) {
@@ -515,7 +515,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                         } else if (isClient()) {
                             Socket socket = new Socket();
                             try {
-                                LogTool.d(TAG, "client start transfer MAC cuMAC: " + currentMAC);
+                                LogUtils.d(TAG, "client start transfer MAC cuMAC: " + currentMAC);
                                 socket.bind(null);
                                 socket.connect((new InetSocketAddress(connectInfo.groupOwnerAddress, SOCKET_PORT)), SOCKET_TIMEOUT);
                                 OutputStream outputStream = socket.getOutputStream();
@@ -537,7 +537,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                                 }
                                 outputStream.flush();
                                 outputStream.close();
-                                LogTool.d(TAG, "client has receviced serverMAC:" + currentConnectMAC);
+                                LogUtils.d(TAG, "client has receviced serverMAC:" + currentConnectMAC);
                                 inputStream.close();
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -553,7 +553,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                     while (isConnected) {
                         try {
                             Socket clientSocket = serverSocket.accept();
-                            LogTool.d(TAG, "a new connection->" + clientSocket);
+                            LogUtils.d(TAG, "a new connection->" + clientSocket);
                             receviceFiles(clientSocket); //create a new task to handle the client connect
                             try {
                                 sleep(200);
@@ -566,7 +566,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                         }
                     }
                 } catch (IOException e) {
-                    LogTool.i(TAG, "onConnectInfoAvaliable-->exception");
+                    LogUtils.i(TAG, "onConnectInfoAvaliable-->exception");
                     try {
                         serverSocket.close();
                         run(); //重新调用run方法
@@ -609,7 +609,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
     }
 
     public void release() {
-        LogTool.d(TAG, "WifiP2pHelper-->release()");
+        LogUtils.d(TAG, "WifiP2pHelper-->release()");
         try {
             this.serverSocket.close();
         } catch (Exception e) {
@@ -623,7 +623,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
         manager.removeGroup(channel, new ActionListener() {
             @Override
             public void onFailure(int reasonCode) {
-                LogTool.d(TAG, "Disconnect failed. Reason :" + reasonCode);
+                LogUtils.d(TAG, "Disconnect failed. Reason :" + reasonCode);
             }
 
             @Override
@@ -670,7 +670,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
             } else { //wifi-p2p off
 
             }
-            LogTool.d(TAG, "P2P state changed - " + state);
+            LogUtils.d(TAG, "P2P state changed - " + state);
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
 
             // request available peers from the wifi p2p manager. This is an
@@ -679,7 +679,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
             if (manager != null) {
                 manager.requestPeers(channel, this);
             }
-            LogTool.d(TAG, "P2P peers changed");
+            LogUtils.d(TAG, "P2P peers changed");
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
 
             if (manager == null) {
@@ -694,12 +694,12 @@ public class WifiP2pHelper extends BroadcastReceiver implements
                 //to find group owner IP
                 isConnected = true;
                 manager.requestConnectionInfo(channel, this);
-                LogTool.d(TAG, "device Connected!!--->requestConnectionInfo()");
+                LogUtils.d(TAG, "device Connected!!--->requestConnectionInfo()");
             } else {
                 // It's a disconnect
                 isConnected = false;
                 currentConnectMAC = null;
-                LogTool.d(TAG, "device disconnected!!)");
+                LogUtils.d(TAG, "device disconnected!!)");
                 release();
                 mHandler.sendEmptyMessage(WIFIP2P_DEVICE_DISCONNECTED); //设置断开连接
             }

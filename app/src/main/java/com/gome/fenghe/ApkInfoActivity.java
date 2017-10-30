@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.gome.fenghe.utils.LogTool;
+import com.gome.fenghe.utils.LogUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,8 +42,8 @@ public class ApkInfoActivity extends BaseActivity {
 
     @Override
     protected void onRestart() {
-        LogTool.v(TAG, "onRestart");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onRestart");
+//        LogUtils.callStack(TAG);
         super.onRestart();
     }
 

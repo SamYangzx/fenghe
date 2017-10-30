@@ -32,7 +32,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gome.fenghe.R;
-import com.gome.fenghe.utils.LogTool;
+import com.gome.fenghe.utils.LogUtils;
 import com.gome.fenghe.wifip2p.WiFiDirectActivity;
 
 import java.util.ArrayList;
@@ -172,7 +172,7 @@ public class DeviceListFragment extends ListFragment {
         //    peers = (ArrayList<WifiP2pDevice>) peerList.clone();
         peers.clear();
         addDevices(peerList, peers);
-        LogTool.d(TAG, "peers.size: " + peers.size());
+        LogUtils.d(TAG, "peers.size: " + peers.size());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
         if (peerList.size() != 0) {
             progressDialog.dismiss();

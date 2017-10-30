@@ -15,6 +15,9 @@ public class AudioRecordUtils {
     private final static int[] VOLUME_DIVIDES = new int[]{3, 5, 6, 7};//安静，吵，很吵，难以忍受
     private final static int COUNT = NOISE_DIVIDES.length;
 
+    private final static int VOLUME_LAST_MS = 1000; //ms
+
+
     private AudioRecord mAudioRecord;
     private boolean isGetVoiceRun;
     private Object mLock;
@@ -80,7 +83,7 @@ public class AudioRecordUtils {
         }).start();
     }
 
-    public void stopCalculateVolume(){
+    public void stopCalculateVolume() {
         isGetVoiceRun = false;
     }
 
@@ -107,5 +110,21 @@ public class AudioRecordUtils {
             mVolumeListener.volumeChanged(VOLUME_DIVIDES[volumeIndex]);
         }
     }
+
+    private int pastTime = 0;  //noise value.
+    private int pastProbablity = 0;
+    private int presentTime = 0;
+    private int presentVolimeIndex = 0; //当前环境音所处区间
+    private int presentProbablity = 0;
+
+    private class VolumeStruct {
+        private int time;
+        private int dB;
+    }
+
+    private int minVolumeDb = 1000; //init
+    private int maxVolumeDb = 0;
+
+//    private int 
 
 }

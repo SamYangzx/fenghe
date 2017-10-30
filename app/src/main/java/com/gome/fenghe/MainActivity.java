@@ -2,14 +2,19 @@ package com.gome.fenghe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.gome.fenghe.utils.AudioRecordUtils;
-import com.gome.fenghe.utils.LogTool;
+import com.gome.fenghe.utils.LogUtils;
 import com.gome.fenghe.wifip2p2.WifiP2pActivity;
+
+import java.io.IOException;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -17,12 +22,13 @@ public class MainActivity extends BaseActivity {
     private Context mContext;
     private Button mWifiBtn;
     AudioManager mAudioManager;
+    private Camera camera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LogTool.d(TAG, "onCreate.");
+        LogUtils.d(TAG, "onCreate.");
         mContext = this;
         initView();
     }
@@ -30,32 +36,32 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onStart() {
-        LogTool.v(TAG, "onStart");
+        LogUtils.v(TAG, "onStart");
 
-//        LogTool.callStack(TAG);
+//        LogUtils.callStack(TAG);
         super.onStart();
     }
 
 
     @Override
     protected void onResume() {
-        LogTool.v(TAG, "onResume");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onResume");
+//        LogUtils.callStack(TAG);
         super.onResume();
     }
 
 
     @Override
     protected void onRestart() {
-        LogTool.v(TAG, "onRestart");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onRestart");
+//        LogUtils.callStack(TAG);
         super.onRestart();
     }
 
     @Override
     protected void onPause() {
-        LogTool.v(TAG, "onPause");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onPause");
+//        LogUtils.callStack(TAG);
 
         super.onPause();
     }
@@ -63,16 +69,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-        LogTool.v(TAG, "onStop");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onStop");
+//        LogUtils.callStack(TAG);
 
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        LogTool.v(TAG, "onDestroy");
-//        LogTool.callStack(TAG);
+        LogUtils.v(TAG, "onDestroy");
+//        LogUtils.callStack(TAG);
 
         super.onDestroy();
     }
@@ -107,22 +113,102 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    private AudioRecordUtils mRecordUtils;
     private void test() {
-        AudioRecordUtils record = new AudioRecordUtils();
-        record.setListener(new AudioRecordUtils.IVolumeListener() {
+        mRecordUtils = new AudioRecordUtils();
+        mRecordUtils.setListener(new AudioRecordUtils.IVolumeListener() {
             @Override
             public void volumeChanged(int volume) {
                 setCallVolume(volume);
             }
         });
-        record.getNoiseLevel();
+        mRecordUtils.getNoiseLevel();
+
+//        flashLight();
     }
 
     private void setCallVolume(int volume) {
-        LogTool.d(TAG, "setCallVolume: " + volume);
-        mAudioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, volume, AudioManager.FLAG_PLAY_SOUND);
-        LogTool.d(TAG, "getCallVolume: " + mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL));
+        Log.d(TAG, "setCallVolume: " + volume);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, volume, AudioManager.FLAG_SHOW_UI);
+        Log.d(TAG, "getCallVolume: " + mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL));
 
+    }
+
+    private void stopVolumeCalculate(){
+        if(mRecordUtils != null){
+            mRecordUtils.stopCalculateVolume();
+        }
+    }
+
+
+    private void flashLight() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int i = 0;
+                initFlashLight();
+                while (i < 1000000000) {
+                    i++;
+                    if (i % 10 < 2) {
+                        if (!mLightOn) {
+                            openFlashlight();
+                        }
+                    } else {
+                        if (mLightOn) {
+                            closeFlashlight();
+                        }
+                    }
+//                    try{
+//                        Thread.sleep(1);
+//                    }catch (Exception e){
+//
+//                    }
+                }
+            }
+        }).start();
+    }
+
+
+    private boolean mLightOn = false;
+
+    private void initFlashLight(){
+        camera = Camera.open();
+        parameters = camera.getParameters();
+        try {
+            camera.setPreviewTexture(new SurfaceTexture(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    Camera.Parameters parameters ;
+
+    //打开闪光灯
+    private void openFlashlight() {
+        Log.d(TAG, "openFlashlight start");
+        mLightOn = true;
+//        camera = Camera.open();
+//        Camera.Parameters parameters = camera.getParameters();
+//        try {
+//            camera.setPreviewTexture(new SurfaceTexture(0));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(parameters);
+//        camera.startPreview();
+        Log.d(TAG, "openFlashlight end");
+    }
+
+    //关闭闪光灯
+    private void closeFlashlight() {
+        Log.d(TAG, "closeFlashlight start");
+        mLightOn = false;
+//        Camera.Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        camera.setParameters(parameters);
+//        camera.stopPreview();
+//        camera.release();
+        Log.d(TAG, "closeFlashlight end");
     }
 
 }

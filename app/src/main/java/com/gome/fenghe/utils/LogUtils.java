@@ -9,8 +9,8 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LogTool {
-    private static final String TAG = "LogTool";
+public class LogUtils {
+    private static final String TAG = "LogUtils";
     private static final String APP_TAG = "sam---";
     private static final String LOG_FOLDER = "com.lanmeng.fenghe";
     private static final String LOG_PATH = android.os.Environment.getExternalStorageDirectory()
@@ -25,7 +25,7 @@ public class LogTool {
     private static final int LOG_ERROR = 4;
 
     private static final int LOG_LEVEL = LOG_VERBOSE;
-    private static boolean LOG_TO_FILE = false;
+    private static boolean LOG_TO_FILE = true;
 
     public static void v(String tag, String msg) {
         v(tag, msg, null);
