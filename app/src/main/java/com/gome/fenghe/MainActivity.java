@@ -21,6 +21,7 @@ public class MainActivity extends BaseActivity {
 
     private Context mContext;
     private Button mWifiBtn;
+    private Button mEndBtn;
     AudioManager mAudioManager;
     private Camera camera;
 
@@ -87,8 +88,11 @@ public class MainActivity extends BaseActivity {
     public void initView() {
         mWifiBtn = (Button) findViewById(R.id.wifi_p2p_btn);
         mWifiBtn.setOnClickListener(mListener);
-        Button mActivityTestBtn = (Button) findViewById(R.id.activity_test_btn);
+        Button mActivityTestBtn = (Button) findViewById(R.id.start_btn);
         mActivityTestBtn.setOnClickListener(mListener);
+
+        mEndBtn = (Button)findViewById(R.id.end_btn);
+        mEndBtn.setOnClickListener(mListener);
     }
 
     @Override
@@ -103,9 +107,12 @@ public class MainActivity extends BaseActivity {
                 case R.id.wifi_p2p_btn:
                     startActivity(new Intent(MainActivity.this, WifiP2pActivity.class));
                     break;
-                case R.id.activity_test_btn:
+                case R.id.start_btn:
 //                    startActivity(new Intent(mContext, CopyTestActivity.class));
                     test();
+                    break;
+                case R.id.end_btn:
+                    stopVolumeCalculate();
                     break;
                 default:
                     break;
@@ -122,7 +129,8 @@ public class MainActivity extends BaseActivity {
                 setCallVolume(volume);
             }
         });
-        mRecordUtils.getNoiseLevel();
+        int volume = mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+        mRecordUtils.adjustVolume(volume);
 
 //        flashLight();
     }
