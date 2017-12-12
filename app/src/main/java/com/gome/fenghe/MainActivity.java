@@ -1,6 +1,5 @@
 package com.gome.fenghe;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
@@ -133,13 +132,13 @@ public class MainActivity extends BaseActivity {
 //        int volume = mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
 //        mRecordUtils.adjustVolume(volume);
         //com.android.settings/com.android.settings.Settings
-        ComponentName cmp = new ComponentName("com.android.settings", "com.android.settings.Settings");
-        Intent intent = new Intent();
-        intent.setComponent(cmp);
-        startActivity(intent);
-//        flashLight();
-//        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+//        ComponentName cmp = new ComponentName("com.android.settings", "com.android.settings.Settings");
+//        Intent intent = new Intent();
+//        intent.setComponent(cmp);
 //        startActivity(intent);
+//        flashLight();
+        Intent intent = new Intent(MainActivity.this, PreferenceTestActivity.class);
+        startActivity(intent);
 
     }
 
