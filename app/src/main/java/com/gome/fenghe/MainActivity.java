@@ -1,5 +1,6 @@
 package com.gome.fenghe;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
@@ -122,17 +123,24 @@ public class MainActivity extends BaseActivity {
 
     private AudioRecordUtils mRecordUtils;
     private void test() {
-        mRecordUtils = new AudioRecordUtils();
-        mRecordUtils.setListener(new AudioRecordUtils.IVolumeListener() {
-            @Override
-            public void volumeChanged(int volume) {
-                setCallVolume(volume);
-            }
-        });
-        int volume = mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
-        mRecordUtils.adjustVolume(volume);
-
+//        mRecordUtils = new AudioRecordUtils();
+//        mRecordUtils.setListener(new AudioRecordUtils.IVolumeListener() {
+//            @Override
+//            public void volumeChanged(int volume) {
+//                setCallVolume(volume);
+//            }
+//        });
+//        int volume = mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+//        mRecordUtils.adjustVolume(volume);
+        //com.android.settings/com.android.settings.Settings
+        ComponentName cmp = new ComponentName("com.android.settings", "com.android.settings.Settings");
+        Intent intent = new Intent();
+        intent.setComponent(cmp);
+        startActivity(intent);
 //        flashLight();
+//        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+//        startActivity(intent);
+
     }
 
     private void setCallVolume(int volume) {

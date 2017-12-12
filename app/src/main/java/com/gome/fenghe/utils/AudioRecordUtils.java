@@ -264,18 +264,19 @@ public class AudioRecordUtils {
                 latestXsCountZone[newVolumeZone]++;
                 latestXsFreqZone[newVolumeZone] = (float) latestXsCountZone[newVolumeZone] / LATEST_VOLUME_COUNT;
             }
-            printArray(totalFreqZone);
-            LogUtils.v(TAG, "start print---  latestXsFreqZone");
-            printArray(latestXsFreqZone);
+//            printArray(totalFreqZone);
+//            LogUtils.v(TAG, "start print---  latestXsFreqZone");
+//            printArray(latestXsFreqZone);
 
         }
 
 
         /**
-         * 方法一：由于人说话后声音强度会轻易超过VOICE_DB, 若在一定时间段内麦克风中的声音强度低于VOICE_DB的概率达到
-         * {@link #NOISE_DB_PRECENT}, 我们就认为此段时间内只包含噪音。
-         * 方法二：由于人在说话的过程中，声音会有短暂的回落，若在较长一段事件内麦克风中的声音强度高于VOICE_DB的概率达到
-         * {@link #VERY_NOISE_DB_PRECENT},我们认为此端时间内噪音达到了XXdb.
+         * 一：由于人说话后声音强度会轻易超过VOICE_DB, 若在一定时间段内(初设为2s)麦克风中的声音强度低于VOICE_DB （初设为70db）的概率达到
+         * {@link #NOISE_DB_PRECENT},（调试时使用的默认值为0.6） 我们就认为此段时间内只包含噪音。
+         * 二：由于人在说话的过程中，声音强度会有一定的回落，若在较长一段时间(初设为4s)内麦克风中的声音强度高于VOICE_DB的概率达到
+         * {@link #VERY_NOISE_DB_PRECENT}（调试时使用的默认值为0.9）,我们认为此端时间内并不是人在说话，而是噪音达到了XXdb.
+         * 缺陷：无法区分较长时间内人连续说话时的情况。
          *
          * @return 计算声音音量区间
          */
