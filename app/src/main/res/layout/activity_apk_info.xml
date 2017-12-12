@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gome.fenghe.ApkInfoActivity">
+    tools:context="com.lanmeng.fenghe.ApkInfoActivity">
 
     <TextView
         android:id="@+id/pkg_info_tv"

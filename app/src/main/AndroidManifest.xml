@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gome.fenghe">
+    package="com.lanmeng.fenghe">
 
-    <uses-sdk android:minSdkVersion="14" />
+    <uses-sdk android:minSdkVersion="21" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.lanmeng.fenghe.MainActivity"
             android:windowShowWallpaper="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,10 +36,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".wifip2p.WiFiDirectActivity" />
-        <activity android:name=".wifip2p2.WifiP2pActivity" />
+        <activity android:name="com.lanmeng.fenghe.wifip2p.WiFiDirectActivity" />
+        <activity android:name="com.lanmeng.fenghe.wifip2p2.WifiP2pActivity" />
         <activity
-            android:name=".BaseActivity"
+            android:name="com.lanmeng.fenghe.BaseActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
@@ -50,11 +50,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".test.AnrTestActivity" />
-        <activity android:name=".AnotherActivity" />
-        <activity android:name=".ApkInfoActivity" />
-        <activity android:name=".CopyTestActivity" />
-        <activity android:name=".PreferenceTestActivity"></activity>
+        <activity android:name="com.lanmeng.fenghe.test.AnrTestActivity" />
+        <activity android:name="com.lanmeng.fenghe.AnotherActivity" />
+        <activity android:name="com.lanmeng.fenghe.ApkInfoActivity" />
+        <activity android:name="com.lanmeng.fenghe.CopyTestActivity" />
+        <activity android:name="com.lanmeng.fenghe.PreferenceTestActivity"></activity>
     </application>
 
 </manifest>

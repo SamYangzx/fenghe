@@ -4,8 +4,8 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "com.gome.fenghe"
-        minSdkVersion 15
+        applicationId "com.lanmeng.fenghe"
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"

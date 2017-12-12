@@ -27,7 +27,6 @@
             android:text="string/date_time_auto_summaryOn" />
     </LinearLayout>
 
-    <!--<gome.widget.GomeSwitch-->
     <Switch
         android:id="@+id/custom_switch"
         android:layout_width="50dp"

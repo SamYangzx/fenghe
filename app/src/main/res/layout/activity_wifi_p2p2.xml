@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.gome.fenghe.wifip2p2.WifiP2pActivity">
+    tools:context="com.lanmeng.fenghe.wifip2p2.WifiP2pActivity">
 
     <Button
         android:id="@+id/search_btn"
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/frag_list_p2p"
-        class="com.gome.fenghe.wifip2p2.DeviceListFragment"
+        class="com.lanmeng.fenghe.wifip2p2.DeviceListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></fragment>
 
