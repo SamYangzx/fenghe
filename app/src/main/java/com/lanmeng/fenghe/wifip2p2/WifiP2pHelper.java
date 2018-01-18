@@ -94,7 +94,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
     public WifiP2pHelper(final Activity activity, Handler handler) {
         this.activity = activity;
         this.mHandler = handler;
-        manager = (WifiP2pManager) activity
+        manager = (WifiP2pManager) (activity.getApplication())
                 .getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(activity, activity.getMainLooper(), null);
         deviceList = new ArrayList<WifiP2pDevice>();
@@ -104,7 +104,7 @@ public class WifiP2pHelper extends BroadcastReceiver implements
 
     private void updateWifiMac() {
         if (currentMAC == null) {
-            WifiManager wifiManager = (WifiManager) activity.getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifiManager = (WifiManager) ((activity.getApplication()).getSystemService(Context.WIFI_SERVICE));
             currentMAC = wifiManager.getConnectionInfo() == null ? null : wifiManager.getConnectionInfo().getMacAddress();
         }
     }
@@ -634,14 +634,14 @@ public class WifiP2pHelper extends BroadcastReceiver implements
 
     // 打开/关闭wifi
     public void toggleWifi(boolean isOpen) {
-        WifiManager wifiManager = (WifiManager) activity
+        WifiManager wifiManager = (WifiManager) (activity.getApplication())
                 .getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(isOpen);
     }
 
     // 判断wifi是否打开
     public boolean isWifiOn() {
-        WifiManager wifiManager = (WifiManager) activity
+        WifiManager wifiManager = (WifiManager) (activity.getApplication())
                 .getSystemService(Context.WIFI_SERVICE);
         return wifiManager.isWifiEnabled();
     }

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fenghe.iml" filepath="$PROJECT_DIR$/Fenghe.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/yuyin/yuyin.iml" filepath="$PROJECT_DIR$/yuyin/yuyin.iml" />
+      <module fileurl="file://D:\AndroidProject\fenghe\Fenghe.iml" filepath="D:\AndroidProject\fenghe\Fenghe.iml" />
+      <module fileurl="file://D:\AndroidProject\fenghe\app\app.iml" filepath="D:\AndroidProject\fenghe\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fenghe.iml" filepath="$PROJECT_DIR$/fenghe.iml" />
+      <module fileurl="file://D:\AndroidProject\fenghe\yuyin\yuyin.iml" filepath="D:\AndroidProject\fenghe\yuyin\yuyin.iml" />
     </modules>
   </component>
 </project>
