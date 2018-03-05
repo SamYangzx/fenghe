@@ -1,1 +1,1 @@
-include ':app', ':yuyin'
+include ':app', ':yuyin', ':javalib'
