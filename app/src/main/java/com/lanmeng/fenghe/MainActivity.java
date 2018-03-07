@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lanmeng.fenghe.utils.AudioRecordUtils;
+import com.lanmeng.fenghe.utils.DisplayUtil;
 import com.lanmeng.fenghe.utils.LogUtils;
 import com.lanmeng.fenghe.wifip2p2.WifiP2pActivity;
 
@@ -137,8 +138,9 @@ public class MainActivity extends BaseActivity {
 //        intent.setComponent(cmp);
 //        startActivity(intent);
 //        flashLight();
-        Intent intent = new Intent(MainActivity.this, PreferenceTestActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, PreferenceTestActivity.class);
+//        startActivity(intent);
+        DisplayUtil.printDisplay(mContext);
 
     }
 
