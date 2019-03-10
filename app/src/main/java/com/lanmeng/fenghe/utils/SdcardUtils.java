@@ -1,10 +1,11 @@
 package com.lanmeng.fenghe.utils;
 
-import java.io.File;
-import java.lang.reflect.Method;
-
 import android.content.Context;
 import android.os.storage.StorageManager;
+import android.support.annotation.NonNull;
+
+import java.io.File;
+import java.lang.reflect.Method;
 
 /**
  * @author Administrator
@@ -14,6 +15,7 @@ public class SdcardUtils {
     private static String SEND_DIR = RECEIVE_DIR + File.separator + "send";
     private static String RECEIVER_DIR = RECEIVE_DIR + File.separator + "receiver";
 
+    @NonNull
     public static File getSendFileDirPath(Context context) {
         return new File(SdcardUtils.getUseableSdcardFile(context, false),
                 SEND_DIR);
