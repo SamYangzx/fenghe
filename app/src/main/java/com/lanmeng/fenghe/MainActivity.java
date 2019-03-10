@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lanmeng.fenghe.utils.AudioRecordUtils;
-import com.lanmeng.fenghe.utils.DisplayUtil;
 import com.lanmeng.fenghe.utils.LogUtils;
 import com.lanmeng.fenghe.wifip2p2.WifiP2pActivity;
 
@@ -123,24 +122,9 @@ public class MainActivity extends BaseActivity {
 
     private AudioRecordUtils mRecordUtils;
     private void test() {
-//        mRecordUtils = new AudioRecordUtils();
-//        mRecordUtils.setListener(new AudioRecordUtils.IVolumeListener() {
-//            @Override
-//            public void volumeChanged(int volume) {
-//                setCallVolume(volume);
-//            }
-//        });
-//        int volume = mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
-//        mRecordUtils.adjustVolume(volume);
-        //com.android.settings/com.android.settings.Settings
-//        ComponentName cmp = new ComponentName("com.android.settings", "com.android.settings.Settings");
-//        Intent intent = new Intent();
-//        intent.setComponent(cmp);
-//        startActivity(intent);
-//        flashLight();
-//        Intent intent = new Intent(MainActivity.this, PreferenceTestActivity.class);
-//        startActivity(intent);
-        DisplayUtil.printDisplay(mContext);
+        Intent intent = new Intent(MainActivity.this, PostRequest.class);
+        startActivity(intent);
+//        DisplayUtil.printDisplay(mContext);
 
     }
 

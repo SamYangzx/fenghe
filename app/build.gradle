@@ -26,6 +26,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -33,5 +34,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    // Retrofit库
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    // Okhttp库
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     testCompile 'junit:junit:4.12'
 }
